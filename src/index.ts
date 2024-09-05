@@ -12,16 +12,18 @@ const initFirebase = () => {
   try {
     core.info("Initialized Firebase Admin Connection");
     const credentials = core.getInput('credentials', isRequired);
+    core.info("loaded credentials");
     let parsedCredentials;
     try {
       parsedCredentials = JSON.parse(credentials);
     } catch (e) {
       parsedCredentials = JSON.parse(atob(credentials));
-
+    }
+    core.info(`Parsed credentials: ${JSON.stringify(parsedCredentials}`);
     firebase = admin.initializeApp({
       credential: admin.credential.cert(parsedCredentials as admin.ServiceAccount),
-      databaseURL: core.getInput('databaseUrl'),
     });
+    console.info("Initialized app");
   } catch(error) {
     core.setFailed(JSON.stringify(error));
     process.exit(core.ExitCode.Failure);
