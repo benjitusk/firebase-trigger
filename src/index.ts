@@ -102,6 +102,7 @@ const updateFirestoreDatabase = (path: string, value: Record<string, any>) => {
 }
 
 const processAction = () => {
+  core.info("processing");
   initFirebase();
 
   try {
