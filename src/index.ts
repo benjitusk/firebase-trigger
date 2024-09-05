@@ -11,6 +11,7 @@ const isRequired = {
 const initFirebase = () => {
   try {
     core.info("Initialized Firebase Admin Connection");
+    core.info("Preparing to load creds...");
     const credentials = core.getInput('credentials', isRequired);
     core.info("loaded credentials");
     let parsedCredentials;
@@ -23,7 +24,7 @@ const initFirebase = () => {
     firebase = admin.initializeApp({
       credential: admin.credential.cert(parsedCredentials as admin.ServiceAccount),
     });
-    console.info("Initialized app");
+    core.info("Initialized app");
   } catch(error) {
     core.setFailed(JSON.stringify(error));
     process.exit(core.ExitCode.Failure);
