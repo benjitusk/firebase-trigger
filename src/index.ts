@@ -123,4 +123,6 @@ const processAction = () => {
   }
 }
 
-processAction();
+//processAction();
+core.info("Done");
+process.exit(core.ExitCode.Success);
