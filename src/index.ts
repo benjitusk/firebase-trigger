@@ -49,7 +49,7 @@ const getDatabaseType = () => {
 const getValue = () => {
 	core.info('Trying to parse expected value');
 	const value = core.getInput('value');
-
+	core.info('Retrieved Value: ' + value);
 	if (!value) {
 		return Date.now();
 	}
