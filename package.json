@@ -1,34 +1,35 @@
 {
-  "name": "firebase-trigger",
-  "version": "1.1.1",
-  "description": "Update firebase data when your build completes",
-  "main": "lib/index.js",
-  "scripts": {
-    "build": "tsc",
-    "pack": "ncc build",
-    "test": "jest"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/w9jds/firebase-trigger.git"
-  },
-  "keywords": [
-    "action",
-    "utility"
-  ],
-  "author": "Jeremy Shore",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/w9jds/firebase-trigger/issues"
-  },
-  "homepage": "https://github.com/w9jds/firebase-trigger#readme",
-  "dependencies": {
-    "@actions/core": "^1.8.2",
-    "@types/node": "^18.7.16",
-    "firebase-admin": "^10.2.0"
-  },
-  "devDependencies": {
-    "jest": "^28.1.0",
-    "typescript": "^4.6.4"
-  }
+	"name": "firebase-trigger",
+	"version": "1.1.1",
+	"description": "Update firebase data when your build completes",
+	"main": "lib/index.js",
+	"scripts": {
+		"build": "tsc",
+		"pack": "ncc build",
+		"test": "jest"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/w9jds/firebase-trigger.git"
+	},
+	"keywords": [
+		"action",
+		"utility"
+	],
+	"author": "Jeremy Shore",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/w9jds/firebase-trigger/issues"
+	},
+	"homepage": "https://github.com/w9jds/firebase-trigger#readme",
+	"dependencies": {
+		"@actions/core": "^1.8.2",
+		"@types/node": "^18.7.16",
+		"firebase-admin": "^10.2.0"
+	},
+	"devDependencies": {
+		"@vercel/ncc": "^0.38.1",
+		"jest": "^28.1.0",
+		"typescript": "^4.6.4"
+	}
 }
