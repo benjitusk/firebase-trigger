@@ -22,7 +22,6 @@ const initFirebase = () => {
 			parsedCredentials = JSON.parse(atob(credentials));
 			core.info('Loaded b64 credentials successfully');
 		}
-		core.info(`Parsed credentials: ${JSON.stringify(parsedCredentials)}`);
 		firebase = admin.initializeApp({
 			credential: admin.credential.cert(parsedCredentials as admin.ServiceAccount),
 		});
@@ -55,7 +54,10 @@ const getValue = () => {
 	}
 
 	try {
-		return JSON.parse(value);
+		core.info('Attempting to parse json');
+		let r = JSON.parse(value);
+		core.info('Parsed json: ' + r);
+		return r;
 	} catch {
 		const num = Number(value);
 
