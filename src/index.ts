@@ -10,17 +10,15 @@ const isRequired = {
 
 const initFirebase = () => {
 	try {
-		core.info('Initialized Firebase Admin Connection');
-		core.info('Preparing to load creds...');
+		core.debug('Initializing Firebase Admin Connection');
 		const credentials = core.getInput('credentials', isRequired);
-		core.info('loaded credentials');
 		let parsedCredentials;
 		try {
 			parsedCredentials = JSON.parse(credentials);
-			core.info('Loaded raw json successfuly');
+			core.debug('Loaded plaintext json credentials successfuly');
 		} catch (e) {
 			parsedCredentials = JSON.parse(atob(credentials));
-			core.info('Loaded b64 credentials successfully');
+			core.debug('Loaded Bas64 credentials successfully');
 		}
 		firebase = admin.initializeApp({
 			credential: admin.credential.cert(parsedCredentials as admin.ServiceAccount),
@@ -46,7 +44,7 @@ const getDatabaseType = () => {
 };
 
 const getValue = () => {
-	core.info('Trying to parse expected value');
+	core.debug('Trying to parse expected value');
 	const value = core.getInput('value');
 
 	if (!value) {
@@ -68,7 +66,7 @@ const getValue = () => {
 			}
 		}
 
-		core.info('Parsed json successfully');
+		core.debug('Parsed json successfully');
 		return valueJsonParsed;
 	} catch {
 		const num = Number(value);
@@ -107,7 +105,11 @@ const updateFirestoreDatabase = (path: string, value: Record<string, any>) => {
 	const shouldMerge = getFirestoreMergeValue();
 
 	core.info(
-		`Updating Firestore Database at collection: ${path} document: ${document} (merge: ${shouldMerge})`
+		`Updating Firestore Database at collection: ${path} document: ${document} (merge: ${shouldMerge}) with value: ${JSON.stringify(
+			value,
+			null,
+			2
+		)}`
 	);
 	firebase
 		.firestore()
@@ -126,28 +128,28 @@ const updateFirestoreDatabase = (path: string, value: Record<string, any>) => {
 };
 
 const processAction = () => {
-	core.info('processing');
 	initFirebase();
 
 	try {
 		const databaseType = getDatabaseType();
 		const path: string = core.getInput('path', isRequired);
 		const value = getValue();
-		core.info('Got value: ' + value);
+		core.debug('Got value: ' + value);
 
 		if (databaseType === 'realtime') {
-			core.info('Updating ' + databaseType);
+			core.debug('Updating ' + databaseType);
 			updateRealtimeDatabase(path, value);
 		}
 
 		if (databaseType === 'firestore') {
-			core.info('Updating ' + databaseType);
+			core.debug('Updating ' + databaseType);
 			updateFirestoreDatabase(path, value);
 		}
 	} catch (error) {
 		core.setFailed(JSON.stringify(error));
 		process.exit(core.ExitCode.Failure);
 	}
+	core.debug('Finished.');
 };
 
 processAction();
